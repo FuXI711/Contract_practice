@@ -1,0 +1,42 @@
+# MetaNodeStake 测试文档
+
+## 测试记录
+```javascript:%2Ftest%2FMetaNodeStake.test.js
+// 最新测试结果 (2024-03-15)
+describe("质押功能", () => {
+  it("ETH质押应准确记录", async () => {
+    // 测试数据: 0.01 ETH
+    const balanceBefore = await stake.stakingBalance(0, user.address);
+    await stake.depositETH({value: ethers.parseEther("0.01")});
+    expect(await stake.stakingBalance(0, user.address)).to.equal(balanceBefore + 0.01);
+  });
+});
+```
+
+## 测试覆盖率
+- 合约: MetaNodeStake.sol
+- 测试文件: /test/MetaNodeStake.test.js
+- 覆盖方法: depositETH(), claim(), unstake()
+
+## 测试用例
+1. 基础功能测试
+   - 正确记录质押金额
+   - 奖励计算精度验证
+   - 解押时间锁机制
+
+2. 边界测试
+   - 最小质押金额(0.001 ETH)
+   - 最大质押金额(1000 ETH)
+   - 奖励溢出检查
+
+## 测试执行
+```bash
+npx hardhat test test/MetaNodeStake.test.js
+```
+
+## 已知问题
+! 时间锁机制需在withdraw()中添加:
+require(block.number >= withdrawBlock, "Withdrawal not available yet");
+
+详细测试数据见：
+<mcfile name="test-results.json" path="c:\Users\15961\init_order\Contract_practice\task2\test-results.json"></mcfile>
