@@ -1,0 +1,17 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+remappings = [
+    "forge-std/=lib/forge-std/src/",
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/"
+]
+
+# Solidity 编译器配置（放在 default profile 内部）
+solidity.version = "0.8.26"
+solidity.optimizer = true
+solidity.runs = 200
+
+# 国内用户加速
+[rpc_endpoints]
+mainnet = "https://eth-mainnet.g.alchemy.com/v2/demo"
